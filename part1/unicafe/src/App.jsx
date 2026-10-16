@@ -3,11 +3,27 @@ import { useState } from "react";
 const Button = ({ onClick, text }) => (
   <button onClick={() => onClick(text)}>{text}</button>
 );
-const Statistics = ({ text, show }) => (
-  <p>
-    {text} {show}
-  </p>
-);
+
+const Statistics = ({ good, neutral, bad, all, average, positive }) => {
+  return (
+    <div>
+      <StatisticsLine text="good" value={good} />
+      <StatisticsLine text="neutral" value={neutral} />
+      <StatisticsLine text="bad" value={bad} />
+      <StatisticsLine text="all" value={all} />
+      <StatisticsLine text="average" value={average} />
+      <StatisticsLine text="positive" value={positive} />
+    </div>
+  );
+};
+
+const StatisticsLine = ({ text, value }) => {
+  return (
+    <p>
+      {text} {value}
+    </p>
+  );
+};
 
 const App = () => {
   // save clicks of each button to its own state
@@ -16,8 +32,8 @@ const App = () => {
   const [bad, setBad] = useState(0);
 
   const all = good + neutral + bad;
-  const average = (good - bad) / all;
-  const positive = (good / all) * 100 + "%";
+  const average = all === 0 ? "" : (good - bad) / all;
+  const positive = all === 0 ? "" : (good / all) * 100 + "%";
 
   const increaseGoodByOne = () => {
     const updatedGood = good + 1;
@@ -41,9 +57,9 @@ const App = () => {
     return (
       <div>
         <h1>give feedback</h1>
-        <Button onClick={increaseGoodByOne} text={"good"}></Button>
-        <Button onClick={increaseNeutralByOne} text={"neutral"}></Button>
-        <Button onClick={increaseBadByOne} text={"bad"}></Button>
+        <Button text="good" onClick={increaseGoodByOne} />
+        <Button text="neutral" onClick={increaseNeutralByOne} />
+        <Button text="bad" onClick={increaseBadByOne} />
         <h1>statistics</h1>
         <p>No feedback given</p>
       </div>
@@ -52,16 +68,18 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <Button onClick={increaseGoodByOne} text={"good"}></Button>
-      <Button onClick={increaseNeutralByOne} text={"neutral"}></Button>
-      <Button onClick={increaseBadByOne} text={"bad"}></Button>
+      <Button text="good" onClick={increaseGoodByOne} />
+      <Button text="neutral" onClick={increaseNeutralByOne} />
+      <Button text="bad" onClick={increaseBadByOne} />
       <h1>statistics</h1>
-      <Statistics show={good} text={"good"}></Statistics>
-      <Statistics show={neutral} text={"neutral"}></Statistics>
-      <Statistics show={bad} text={"bad"}></Statistics>
-      <Statistics show={all} text={"all"}></Statistics>
-      <Statistics show={average} text={"average"}></Statistics>
-      <Statistics show={positive} text={"positive"}></Statistics>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        all={all}
+        average={average}
+        positive={positive}
+      />
     </div>
   );
 };
