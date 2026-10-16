@@ -16,8 +16,8 @@ const App = () => {
   const [bad, setBad] = useState(0);
 
   const all = good + neutral + bad;
-  const average = all === 0 ? "" : (good - bad) / all;
-  const positive = all === 0 ? "" : (good / all) * 100 + "%";
+  const average = (good - bad) / all;
+  const positive = (good / all) * 100 + "%";
 
   const increaseGoodByOne = () => {
     const updatedGood = good + 1;
@@ -37,6 +37,18 @@ const App = () => {
     console.log("bad: ", updatedBad);
   };
 
+  if (all === 0) {
+    return (
+      <div>
+        <h1>give feedback</h1>
+        <Button onClick={increaseGoodByOne} text={"good"}></Button>
+        <Button onClick={increaseNeutralByOne} text={"neutral"}></Button>
+        <Button onClick={increaseBadByOne} text={"bad"}></Button>
+        <h1>statistics</h1>
+        <p>No feedback given</p>
+      </div>
+    );
+  }
   return (
     <div>
       <h1>give feedback</h1>
