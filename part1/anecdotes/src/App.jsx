@@ -14,7 +14,9 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(() =>
+    Math.floor(Math.random() * anecdotes.length),
+  );
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
   const nextAnecdote = () => {
@@ -30,12 +32,36 @@ const App = () => {
     setVotes(next);
   };
 
+  const indexOfMax = (array) => {
+    let max = 0;
+    for (let i = 1; i < array.length; i++) {
+      if (array[max] < array[i]) {
+        max = i;
+      }
+    }
+    return max;
+  };
+
+  if (!votes.reduce((total, count) => count + total, 0))
+    return (
+      <div>
+        <h1>Anecdote of the day</h1>
+        <p>{anecdotes[selected]}</p>
+        <p>has {votes[selected]} votes</p>
+        <Button text="vote" onClick={() => addVote(selected)} />
+        <Button text="next anecdote" onClick={nextAnecdote} />
+      </div>
+    );
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <Button text="vote" onClick={() => addVote(selected)} />
       <Button text="next anecdote" onClick={nextAnecdote} />
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[indexOfMax(votes)]}</p>
+      <p>has {votes[indexOfMax(votes)]} votes</p>
     </div>
   );
 };
