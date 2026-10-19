@@ -24,16 +24,20 @@ const Part = ({ part }) => (
   </p>
 );
 
-const Total = ({ parts }) => (
-  <div>
-    <p>
-      <b>
-        total of {parts.reduce((total, part) => total + part.exercises, 0)}{" "}
-        exercises
-      </b>
-    </p>
-  </div>
-);
+const Total = ({ parts }) => {
+  const total = parts.reduce((total, part) => {
+    // console.log(total, part.exercises);
+    return total + part.exercises;
+  }, 0);
+
+  return (
+    <div>
+      <p>
+        <b>total of {total} exercises</b>
+      </p>
+    </div>
+  );
+};
 
 const App = () => {
   const course = {
