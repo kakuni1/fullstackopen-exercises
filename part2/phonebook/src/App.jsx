@@ -3,8 +3,12 @@ import Persons from "./components/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { id: 1, name: "Arto Hellas", number: "111-111-1111" },
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
+  const [filteredPersons, setFilteredPersons] = useState(persons);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -15,9 +19,9 @@ const App = () => {
 
     if (!persons.find((person) => person.name === newName)) {
       const personObject = {
-        id: persons.length + 1,
         name: newName,
         number: newNumber,
+        id: persons.length + 1,
       };
 
       setPersons(persons.concat(personObject));
@@ -38,9 +42,23 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  const handleFilterQuery = (event) => {
+    const matches = persons.filter((person) =>
+      person.name.toLowerCase().includes(event.target.value),
+    );
+
+    // console.log(event.target.value);
+    // console.log(matches);
+    setFilteredPersons(matches);
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter: <input onChange={handleFilterQuery} placeholder="by name" />
+      </div>
+      <h2>Add new entry</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handlePersonChange} />
@@ -53,7 +71,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={filteredPersons} />
     </div>
   );
 };
