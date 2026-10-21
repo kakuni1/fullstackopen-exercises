@@ -6,8 +6,6 @@ const PersonForm = ({ persons, setPersons }) => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    console.log("newName: ", newName);
-    console.log("newNumber: ", newNumber);
 
     if (!persons.find((person) => person.name === newName)) {
       const personObject = {
