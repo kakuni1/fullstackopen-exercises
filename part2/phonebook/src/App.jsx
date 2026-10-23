@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import phonebookService from "./services/phonebook";
 
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
@@ -9,21 +9,16 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState("");
 
-  useEffect(() => {
-    console.log("useEffect");
-
-    const eventHandler = (response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
-    };
-
-    const promise = axios.get("http://localhost:3001/persons");
-    promise.then(eventHandler);
-  }, []);
-
   const showPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase()),
   );
+
+  useEffect(() => {
+    phonebookService
+      .getAll()
+      .then((initialPersons) => setPersons(initialPersons))
+      .catch((error) => alert(`Error: ${error.message}`));
+  }, []);
 
   return (
     <div>

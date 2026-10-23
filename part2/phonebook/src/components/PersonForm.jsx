@@ -1,8 +1,12 @@
 import { useState } from "react";
+import phonebookService from "../services/phonebook";
 
 const PersonForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+
+  const handlePersonChange = (event) => setNewName(event.target.value);
+  const handleNumberChange = (event) => setNewNumber(event.target.value);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -11,10 +15,12 @@ const PersonForm = ({ persons, setPersons }) => {
       const personObject = {
         name: newName,
         number: newNumber,
-        id: persons.length + 1,
       };
 
-      setPersons(persons.concat(personObject));
+      phonebookService
+        .create(personObject)
+        .then((created) => setPersons((previous) => previous.concat(created)))
+        .catch((error) => alert(`Error: ${error.message}`));
     } else {
       alert(`"${newName}" is already in the phonebook`);
     }
@@ -22,9 +28,6 @@ const PersonForm = ({ persons, setPersons }) => {
     setNewName("");
     setNewNumber("");
   };
-
-  const handlePersonChange = (event) => setNewName(event.target.value);
-  const handleNumberChange = (event) => setNewNumber(event.target.value);
 
   return (
     <div>

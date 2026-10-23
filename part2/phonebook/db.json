@@ -3,22 +3,23 @@
     {
       "name": "Arto Hellas",
       "number": "040-123456",
-      "id": "1"
+      "id": "tZsLBiO6Phk"
     },
     {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
-      "id": "2"
+      "id": "raWvBbcr0CQ"
     },
     {
       "name": "Dan Abramov",
       "number": "12-43-234345",
-      "id": "3"
+      "id": "hRLJn35Yd5Q"
     },
     {
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
-      "id": "4"
+      "id": "KPmds46oaFE"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
