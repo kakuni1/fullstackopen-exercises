@@ -1,7 +1,7 @@
 import { useState } from "react";
 import phonebookService from "../services/phonebook";
 
-const PersonForm = ({ persons, setPersons }) => {
+const PersonForm = ({ persons, setPersons, setMessage, setMessageType }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -21,6 +21,11 @@ const PersonForm = ({ persons, setPersons }) => {
       phonebookService
         .create(personObject)
         .then((created) => setPersons((previous) => previous.concat(created)))
+        .then(() => {
+          setMessageType("success");
+          setMessage(`Added '${personObject.name}' to phonebook`);
+          setTimeout(() => setMessage(null), 5000);
+        })
         .catch((error) => alert(`Error: ${error.message}`));
     } else if (match.number !== newNumber) {
       if (confirm(`'${newName}' already in phonebook, update phone number?`)) {
@@ -38,6 +43,11 @@ const PersonForm = ({ persons, setPersons }) => {
               ),
             );
           })
+          .then(() => {
+            setMessageType("success");
+            setMessage(`Updated phone number for '${personObject.name}'`);
+            setTimeout(() => setMessage(null), 5000);
+          })
           .catch((error) => alert(`Error: ${error.message}`));
       }
     } else {
@@ -46,6 +56,7 @@ const PersonForm = ({ persons, setPersons }) => {
 
     setNewName("");
     setNewNumber("");
+    setMessageType("");
   };
 
   return (
