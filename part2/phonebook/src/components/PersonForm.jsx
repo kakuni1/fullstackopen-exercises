@@ -48,7 +48,16 @@ const PersonForm = ({ persons, setPersons, setMessage, setMessageType }) => {
             setMessage(`Updated phone number for '${personObject.name}'`);
             setTimeout(() => setMessage(null), 5000);
           })
-          .catch((error) => alert(`Error: ${error.message}`));
+          .catch(() => {
+            setPersons((persons) =>
+              persons.filter((person) => person.id !== match.id),
+            );
+            setMessageType("error");
+            setMessage(
+              `Information of '${match.name}' has already been removed from server`,
+            );
+            setTimeout(() => setMessage(null), 5000);
+          });
       }
     } else {
       alert(`"${newName}" is already in the phonebook`);
