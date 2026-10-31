@@ -5,6 +5,7 @@ import countriesService from "./services/countries";
 
 const App = () => {
   const [countries, setCountries] = useState([])
+  const [show, setShow] = useState(null)
   const [query, setQuery] = useState("");
 
   const showCountries =
@@ -20,7 +21,7 @@ const App = () => {
   return (
     <div>
       <Query query={query} setQuery={setQuery} />
-      <Filter countries={showCountries} />
+      <Filter countries={showCountries} show={show} setShow={setShow} />
     </div>
   );
 };
