@@ -24,12 +24,18 @@ let persons = [
   }
 ]
 
+app.use(express.json())
+
+const generateId = () => {
+  return Math.floor(Math.random() * 10000)
+}
+
 app.get("/api/persons", (request, response) => {
   response.json(persons)
 })
 
 app.get("/api/persons/:id", (request, response) => {
-  const id = request.params.id
+  const id = Number(request.params.id)
   const person = persons.find((person) => person.id === id)
 
   if (person) {
@@ -42,6 +48,25 @@ app.get("/api/persons/:id", (request, response) => {
 app.get("/info", (request, response) => {
   response.send(`<p>Phonebook has info for ${persons.length} people</p>
                  <p>${new Date()}</p>`)
+})
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: "name missing"
+    })
+  }
+
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+  }
+
+  persons = persons.concat(person)
+  response.json(person)
 })
 
 app.delete("/api/persons/:id", (request, response) => {

@@ -11,3 +11,12 @@ GET {{host}}/api/persons/1000
 
 ### delete person -> 204
 DELETE {{host}}/api/persons/1
+
+### post person
+POST {{host}}/api/persons
+Content-Type: application/json
+{
+  "id": "5",
+  "name": "Jane Doe",
+  "number": "12-34-56789012"
+}
