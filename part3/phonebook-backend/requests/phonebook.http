@@ -1,0 +1,13 @@
+@host = http://localhost:3001
+
+### get all
+GET {{host}}/api/persons
+
+### get person
+GET {{host}}/api/persons/1
+
+### get missing person -> 404
+GET {{host}}/api/persons/1000
+
+### delete person -> 204
+DELETE {{host}}/api/persons/1
