@@ -20,3 +20,28 @@ Content-Type: application/json
   "name": "Jane Doe",
   "number": "12-34-56789012"
 }
+
+### post person (missing name) -> 400
+POST {{host}}/api/persons
+Content-Type: application/json
+{
+  "id": "5",
+  "number": "12-34-56789012"
+}
+
+### post person (missing number) -> 400
+POST {{host}}/api/persons
+Content-Type: application/json
+{
+  "id": "5",
+  "name": "Jane Doe"
+}
+
+### post person (same name) -> 409
+POST {{host}}/api/persons
+Content-Type: application/json
+{
+  "id": "5",
+  "name": "Arto Hellas",
+  "number": "040-234567"
+}
