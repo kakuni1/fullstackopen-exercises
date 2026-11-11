@@ -1,6 +1,7 @@
 const express = require("express")
 const morgan = require("morgan")
 const app = express()
+const PORT = 3001
 
 let persons = [
   {
@@ -25,14 +26,25 @@ let persons = [
   }
 ]
 
-app.use(morgan("tiny"))
+app.use(express.json())
+app.use(
+  morgan((tokens, request, response) => {
+    return JSON.stringify({
+      method: tokens.method(request, response),
+      path: tokens.url(request, response),
+      code: Number(tokens.status(request, response)),
+      responseTime: `${tokens["response-time"](request, response)} ms`,
+      body: request.body,
+    })
+  })
+)
 
 const generateId = () => {
   return Math.floor(Math.random() * 10000)
 }
 
 app.get("/", (request, response) => {
-  response.send("")
+  response.send("home")
 })
 
 app.get("/api/persons", (request, response) => {
@@ -87,7 +99,6 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end()
 })
 
-const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`)
 })
