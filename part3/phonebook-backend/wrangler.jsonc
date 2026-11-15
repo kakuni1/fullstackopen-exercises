@@ -1,0 +1,23 @@
+{
+  "name": "phonebook-backend",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-14",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*",
+      "/info"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "phonebook.kakuni1.dev",
+      "custom_domain": true
+    }
+  ],
+  "workers_dev": false
+}
