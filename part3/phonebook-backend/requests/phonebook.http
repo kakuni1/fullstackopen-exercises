@@ -1,4 +1,4 @@
-@host = http://localhost:3001
+@host = {{host}}
 
 ### get all
 GET {{host}}/api/persons
