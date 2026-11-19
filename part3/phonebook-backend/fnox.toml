@@ -1,0 +1,13 @@
+#:schema https://fnox.jdx.dev/schema.json
+default_provider = "age"
+
+[providers.age]
+type = "age"
+recipients = ["age1dz86qrfqmqx9xtx6qzwz7ua8k9gulgw9lrqu3fnsylg3nkvwxcysvxxvfk"]
+
+[targets.cf]
+type = "cloudflare-workers"
+worker = "phonebook-backend"
+
+[secrets]
+MONGODB_URI= { provider = "age", value = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAwOWlaK1dFaFhzVGIwRTdBWW5Nd3NrVVZzeTFrZmIxS1gzV3FZR3dRcXcwCm1xVDZobnYxSFY4Yy9QYWNOM1kvNXU2R0NHdzZ4TGhhMlFmTzl0YXA5bEUKLT4gfmkpNy1ncmVhc2UgYmssIG5gU0tSNCkgTnJze1cKQ2NmdVhwZGFKQWlvVm5OQXdvN3FodVBUZTRMWVdCRlRTdzF2OUFyazZXeS9icTM4c1Y3MgotLS0gTHZYZFBTTVplZjNGSldaWm0zYXZPM1VMQUNZVFNxRGxDUUdwTlpIeG96bwrBGd6VtL5Dw+dHVWwJ82DDZv1l9s/vZadTZ9e9IZYmybdHXi4JbpI55EA9K7pONc1SxEtJkJm2nQClLrGErHmZ2psaFSSzeFo8VvgXhjzggfZojZNGU8vwg7Aon3W1vRKuolhIi5g7kFbC/jPkJ3wDkTnAKg+YXASaT5oCY0HuPQ==", push = ["cf"] }

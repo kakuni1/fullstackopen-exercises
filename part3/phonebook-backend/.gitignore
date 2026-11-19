@@ -10,6 +10,10 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+fnox.local.toml
+.fnox.local.toml
+.dev.vars
+.dev.vars.*
 .wrangler
 *.local
 *.env
