@@ -9,7 +9,7 @@
     "dev": "fnox exec -- node --watch index.js",
     "start": "fnox exec -- node index.js",
     "build:ui": "rm -rf dist && cd ../../part2/phonebook && npm run build && cp -r dist ../../part3/phonebook-backend",
-    "dev:worker": "bash -c 'wrangler dev --env-file <(fnox export)'",
+    "dev:worker": "fnox exec -- wrangler dev",
     "deploy": "wrangler deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
     "secrets:push": "fnox push",

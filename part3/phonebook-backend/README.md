@@ -1,4 +1,4 @@
-## Fullstack-open pt. 3 phonebook
+## Fullstack-open phonebook app
 
 ### Deployed to:
 https://phonebook.kakuni1.dev

@@ -1,9 +1,12 @@
+const { Entry, connectMongoDb } = require("./models/entry")
 const express = require("express")
 const morgan = require("morgan")
 const app = express()
-const PORT = process.env.PORT || 3001
+
+const PORT = process.env.PORT
 
 app.use(express.json())
+app.use(connectMongoDb)
 app.use(
   morgan((tokens, request, response) => {
     return JSON.stringify({
@@ -25,7 +28,9 @@ app.get("/", (request, response) => {
 })
 
 app.get("/api/persons", (request, response) => {
-  response.json(persons)
+  Entry.find({}).then((persons) => {
+    response.json(persons)
+  })
 })
 
 app.get("/api/persons/:id", (request, response) => {

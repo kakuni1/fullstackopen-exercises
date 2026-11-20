@@ -22,7 +22,8 @@
   "workers_dev": false,
   "secrets": {
     "required": [
-      "MONGODB_URI"
+      "MONGODB_URI",
+      "PORT"
     ]
   }
 }
