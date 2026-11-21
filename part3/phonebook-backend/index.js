@@ -6,7 +6,18 @@ const app = express()
 const PORT = process.env.PORT
 
 app.use(express.json())
-app.use(connectMongoDb)
+
+connectMongoDb()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server on port: ${PORT}`)
+    })
+  })
+  .catch((error) => {
+    console.log("Mongodb connection failure: ", error.message)
+    process.exit(1)
+  })
+
 app.use(
   morgan((tokens, request, response) => {
     return JSON.stringify({
@@ -18,10 +29,6 @@ app.use(
     })
   })
 )
-
-const generateId = () => {
-  return Math.floor(Math.random() * 10000)
-}
 
 app.get("/", (request, response) => {
   response.send("home")
@@ -49,7 +56,7 @@ app.get("/info", (request, response) => {
                  <p>${new Date()}</p>`)
 })
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const body = request.body
 
   if (!body.name || !body.number) {
@@ -58,20 +65,14 @@ app.post("/api/persons", (request, response) => {
     })
   }
 
-  if (persons.find((person) => body.name === person.name)) {
-    return response.status(409).json({
-      error: "name must be unique"
-    })
-  }
-
-  const person = {
-    id: generateId(),
+  const person = new Entry({
     name: body.name,
     number: body.number
-  }
+  })
 
-  persons = persons.concat(person)
-  response.json(person)
+  person.save()
+    .then((savedPerson) => response.json(savedPerson))
+    .catch((error) => next(error))
 })
 
 app.delete("/api/persons/:id", (request, response) => {
@@ -79,8 +80,4 @@ app.delete("/api/persons/:id", (request, response) => {
   persons = persons.filter((person) => person.id !== id)
 
   response.status(204).end()
-})
-
-app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`)
 })

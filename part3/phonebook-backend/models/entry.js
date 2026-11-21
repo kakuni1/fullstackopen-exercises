@@ -9,16 +9,8 @@ if (!url) {
   process.exit(1)
 }
 
-const connectMongoDb = (request, response, next) => {
-  mongoose.connect(url, { dbName: "phonebook", family: 4 })
-    .then(() => {
-      console.log("connected to mongodb:phonebook")
-      next()
-    })
-    .catch((error) => {
-      console.log(error)
-      next(error)
-    })
+const connectMongoDb = () => {
+  return mongoose.connect(url, { dbName: "phonebook", family: 4 })
 }
 
 const entrySchema = new mongoose.Schema({
